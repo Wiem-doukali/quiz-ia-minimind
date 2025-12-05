@@ -1,0 +1,156 @@
+# ============================================
+# GITIGNORE POUR LE PROJET QUIZ IA MINIMIND
+# ============================================
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers d'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+*.old
+
+# Fichiers de cache
+.cache/
+.temp/
+
+# Fichiers de dépendances
+node_modules/
+bower_components/
+jspm_packages/
+
+# Fichiers de build
+dist/
+build/
+out/
+*.min.js
+*.min.css
+*.map
+
+# Fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Environnement
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Tests
+coverage/
+*.lcov
+
+# Système d'exploitation
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+
+# Paquets
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
+# Fichiers spécifiques au projet
+# ------------------------------------------------------------
+
+# Fichiers audio (s'ils sont générés dynamiquement)
+assets/sounds/generated/
+
+# Images générées
+assets/images/generated/
+assets/images/temp/
+
+# Certificats générés
+*.cert
+*.pem
+
+# Exports utilisateur
+exports/
+downloads/
+
+# Données de développement
+data/development/
+data/test/
+
+# Fichiers de configuration spécifiques
+config.local.json
+secrets.json
+
+# Fichiers de débogage
+debug.log
+error.log
+
+# Fichiers spécifiques à l'IA
+models/ # Modèles IA entraînés
+datasets/ # Jeux de données
+
+# Cache du navigateur
+.serviceworker/
+
+# Fichiers PWA
+sw.js
+manifest.json # (garder le fichier principal)
+
+# ============================================
+# FICHIERS À CONSERVER (NE PAS IGNORER)
+# ============================================
+# Ces fichiers sont nécessaires au fonctionnement :
+
+#!index.html
+#!style.css
+#!js/
+#!js/script.js
+#!js/quiz-data.js
+#!js/ia-generator.js
+#!js/ai-analytics.js
+#!pages/
+#!pages/stats.html
+#!pages/about.html
+#!pages/learn.html
+#!assets/
+#!assets/images/logo.png
+#!assets/images/brain-icon.png
+#!assets/images/trophy.png
+#!docs/
+#!docs/README.md
+#!docs/TECHNICAL.md
+#!docs/API.md
+#!docs/PRESENTATION.md
+#!data/
+#!data/config.json
+#!.gitignore
+#!LICENSE
+#!CNAME (pour GitHub Pages)

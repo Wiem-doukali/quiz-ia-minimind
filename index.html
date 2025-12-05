@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz IA - MiniMind | AI4GOOD</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    
+    <!-- Meta pour les réseaux sociaux -->
+    <meta property="og:title" content="Quiz IA - MiniMind Challenge">
+    <meta property="og:description" content="Découvre l'IA en t'amusant avec ce quiz éducatif pour le défi AI4GOOD">
+    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:url" content="https://minimind.ai4good.org">
+    
+    <style>
+        /* CSS pour le chargement initial */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        
+        .loader-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .loader-logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .loader-text {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h2>MiniMind Challenge</h2>
+            <div class="loader-text">
+                <p>Chargement de l'expérience IA...</p>
+                <div class="loader-bar">
+                    <div class="loader-progress" id="loaderProgress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteneur principal -->
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- En-tête application -->
+        <header class="app-header">
+            <div class="header-top">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="app-info">
+                        <h1>Quiz IA - MiniMind</h1>
+                        <p class="app-subtitle">Découvre l'intelligence artificielle en t'amusant</p>
+                        <div class="app-meta">
+                            <span class="meta-item"><i class="fas fa-graduation-cap"></i> Éducatif</span>
+                            <span class="meta-item"><i class="fas fa-ad"></i> Sans pubs</span>
+                            <span class="meta-item"><i class="fas fa-users"></i> Pour tous</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rating-section">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="rating-value">4.7</span>
+                    </div>
+                    <p class="reviews">1.2K avis • 10K+ téléchargements</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn-install" id="startQuiz">
+                    <i class="fas fa-play"></i> Commencer le Quiz
+                </button>
+                
+                <div class="ai-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="aiToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span class="ai-label">
+                        <i class="fas fa-robot"></i> Mode IA actif
+                    </span>
+                </div>
+            </div>
+            
+            <div class="platform-info">
+                <i class="fas fa-desktop"></i>
+                <span>Disponible sur tous vos appareils • Optimisé pour l'éducation</span>
+            </div>
+        </header>
+
+        <!-- Section Quiz -->
+        <main class="quiz-container" id="quizContainer" style="display: none;">
+            <!-- En-tête du quiz -->
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <div class="quiz-progress">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Question 1/10</div>
+                    </div>
+                    
+                    <div class="score-container">
+                        <div class="score-label">SCORE</div>
+                        <div class="score-value" id="currentScore">0</div>
+                    </div>
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="btn-control" id="hintBtn">
+                        <i class="fas fa-lightbulb"></i> Indice
+                    </button>
+                    <button class="btn-control" id="pauseBtn">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button class="btn-control" id="soundToggle">
+                        <i class="fas fa-volume-up"></i> Son
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carte question -->
+            <div class="question-card">
+                <div class="question-header">
+                    <span class="question-number" id="questionNumber">Q1</span>
+                    <span class="question-difficulty" id="questionDifficulty">Facile</span>
+                    <span class="question-category" id="questionCategory">Fondamentaux IA</span>
+                </div>
+                
+                <div class="question-content">
+                    <h2 class="question-text" id="questionText">Chargement de la question...</h2>
+                    
+                    <div class="question-image" id="questionImage" style="display: none;">
+                        <img src="" alt="Illustration de la question" id="questionImg">
+                    </div>
+                </div>
+                
+                <!-- Options de réponse -->
+                <div class="options-grid" id="optionsContainer">
+                    <!-- Les options seront injectées par JavaScript -->
+                </div>
+                
+                <!-- Badge IA -->
+                <div class="ai-badge" id="aiBadge" style="display: none;">
+                    <i class="fas fa-robot"></i>
+                    <span>Question générée par IA</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="navigation">
+                <button class="btn-nav" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Précédent
+                </button>
+                
+                <div class="timer-container" id="timerContainer">
+                    <div class="timer-circle">
+                        <svg class="timer-svg" width="60" height="60">
+                            <circle class="timer-bg" cx="30" cy="30" r="27"></circle>
+                            <circle class="timer-progress" cx="30" cy="30" r="27" id="timerCircle"></circle>
+                        </svg>
+                        <span class="timer-text" id="timerText">∞</span>
+                    </div>
+                </div>
+                
+                <button class="btn-nav btn-next" id="nextBtn" disabled>
+                    Suivant <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Explication IA -->
+            <div class="explanation-card" id="explanationCard" style="display: none;">
+                <div class="explanation-header">
+                    <i class="fas fa-robot"></i>
+                    <h3>Explication IA</h3>
+                    <button class="btn-close" id="closeExplanation">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="explanation-content">
+                    <p id="explanationText">Chargement de l'explication...</p>
+                    <div class="explanation-details" id="explanationDetails">
+                        <div class="detail-item">
+                            <i class="fas fa-brain"></i>
+                            <span>Concept : <strong id="explanationConcept">IA</strong></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Difficulté : <strong id="explanationDifficulty">Moyenne</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indice IA -->
+            <div class="hint-modal" id="hintModal" style="display: none;">
+                <div class="hint-content">
+                    <div class="hint-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Indice IA</h3>
+                        <button class="btn-close" id="closeHint">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="hint-body">
+                        <p id="hintText">L'IA apprend comme toi : avec de la pratique et des exemples !</p>
+                        <div class="hint-tip">
+                            <i class="fas fa-tip"></i>
+                            <strong>Astuce pédagogique :</strong> Pense à comment tu apprends de nouvelles choses.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Section Résultats -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-container">
+                <!-- Animation de célébration -->
+                <div class="celebration">
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                </div>
+                
+                <!-- Trophée -->
+                <div class="trophy-container">
+                    <div class="trophy">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="trophy-shine"></div>
+                </div>
+                
+                <!-- Titre -->
+                <h1 class="results-title">Quiz Terminé !</h1>
+                <p class="results-subtitle">Tu as découvert les bases de l'intelligence artificielle</p>
+                
+                <!-- Score final -->
+                <div class="final-score-container">
+                    <div class="score-circle">
+                        <svg class="score-svg" width="180" height="180">
+                            <circle class="score-bg" cx="90" cy="90" r="80"></circle>
+                            <circle class="score-fill" cx="90" cy="90" r="80" id="scoreCircle"></circle>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-final" id="finalScore">0</span>
+                            <span class="score-total">/10</span>
+                        </div>
+                    </div>
+                    
+                    <div class="score-breakdown">
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Correctes</span>
+                            <span class="breakdown-value" id="correctCount">0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">IA Générées</span>
+                            <span class="breakdown-value" id="aiGeneratedCount">0</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Temps</span>
+                            <span class="breakdown-value" id="timeSpent">0s</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feedback IA -->
+                <div class="ai-feedback-card">
+                    <div class="feedback-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>Analyse IA de ta performance</h3>
+                    </div>
+                    <div class="feedback-content">
+                        <p id="feedbackText">Analyse en cours...</p>
+                        <div class="feedback-stats" id="feedbackStats">
+                            <!-- Statistiques générées par IA -->
+                        </div>
+                        <div class="feedback-recommendations" id="feedbackRecommendations">
+                            <!-- Recommandations générées par IA -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="results-actions">
+                    <button class="btn-action btn-primary" id="restartBtn">
+                        <i class="fas fa-redo"></i> Rejouer
+                    </button>
+                    <button class="btn-action btn-secondary" id="shareBtn">
+                        <i class="fas fa-share-alt"></i> Partager
+                    </button>
+                    <button class="btn-action btn-tertiary" id="certificateBtn">
+                        <i class="fas fa-award"></i> Certificat
+                    </button>
+                </div>
+                
+                <!-- Progression -->
+                <div class="progress-summary">
+                    <h4>Ta progression</h4>
+                    <div class="progress-chart">
+                        <div class="chart-bar" id="progressChart">
+                            <!-- Barres de progression -->
+                        </div>
+                    </div>
+                    <p class="progress-note">Continue à apprendre pour débloquer tous les niveaux !</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Informations -->
+        <section class="info-section">
+            <div class="info-tabs">
+                <button class="tab-btn active" data-tab="about">
+                    <i class="fas fa-info-circle"></i> À propos
+                </button>
+                <button class="tab-btn" data-tab="features">
+                    <i class="fas fa-star"></i> Fonctionnalités
+                </button>
+                <button class="tab-btn" data-tab="ai">
+                    <i class="fas fa-robot"></i> L'IA dans le quiz
+                </button>
+                <button class="tab-btn" data-tab="minimind">
+                    <i class="fas fa-trophy"></i> MiniMind
+                </button>
+            </div>
+            
+            <div class="tab-content active" id="aboutTab">
+                <h3>Bienvenue sur Quiz IA - MiniMind</h3>
+                <p>Ce quiz éducatif a été spécialement créé pour le <strong>défi MiniMind</strong> organisé par la communauté <strong>AI4GOOD</strong>.</p>
+                
+                <div class="mission">
+                    <h4><i class="fas fa-bullseye"></i> Notre mission</h4>
+                    <p>Rendre l'intelligence artificielle accessible et compréhensible pour tous, en particulier les jeunes passionnés de technologie.</p>
+                </div>
+                
+                <div class="features-highlight">
+                    <div class="feature-highlight">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h5>Pédagogique</h5>
+                        <p>Apprends en t'amusant avec des explications claires</p>
+                    </div>
+                    <div class="feature-highlight">
+                        <i class="fas fa-robot"></i>
+                        <h5>Intelligent</h5>
+                        <p>L'IA génère des questions et analyse tes réponses</p>
+                    </div>
+                    <div class="feature-highlight">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h5>Accessible</h5>
+                        <p>Disponible sur tous les appareils, sans installation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="featuresTab">
+                <h3>Fonctionnalités avancées</h3>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Génération IA de questions</h5>
+                            <p>Notre IA crée des questions uniques à chaque session</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Analyse personnalisée</h5>
+                            <p>Reçois un feedback détaillé sur tes forces et faiblesses</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Mode progressif</h5>
+                            <p>La difficulté s'adapte à ton niveau</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Suivi des progrès</h5>
+                            <p>Visualise ton amélioration au fil du temps</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="aiTab">
+                <h3>Comment l'IA fonctionne dans ce quiz</h3>
+                
+                <div class="ai-explanation">
+                    <div class="ai-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Base de connaissances</h5>
+                            <p>L'IA utilise une base de données de concepts sur l'IA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Génération intelligente</h5>
+                            <p>Elle combine des templates avec des concepts pour créer des questions uniques</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Analyse contextuelle</h5>
+                            <p>L'IA analyse tes réponses pour adapter la difficulté</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h5>Feedback personnalisé</h5>
+                            <p>Elle génère des explications et recommandations adaptées</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <h5>Technologies utilisées :</h5>
+                    <div class="tech-tags">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Algorithmes IA</span>
+                        <span class="tech-tag">HTML5/CSS3</span>
+                        <span class="tech-tag">Local Storage</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="minimindTab">
+                <h3>Le défi MiniMind par AI4GOOD</h3>
+                
+                <div class="minimind-info">
+                    <div class="minimind-logo">
+                        <i class="fas fa-brain"></i>
+                        <span>MiniMind Challenge</span>
+                    </div>
+                    
+                    <p>MiniMind est un défi éducatif organisé par la communauté <strong>AI4GOOD</strong> pour encourager les jeunes à découvrir et expérimenter l'intelligence artificielle.</p>
+                    
+                    <div class="minimind-goals">
+                        <h5>Objectifs du défi :</h5>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Démocratiser l'accès à l'IA</li>
+                            <li><i class="fas fa-check"></i> Encourager l'apprentissage pratique</li>
+                            <li><i class="fas fa-check"></i> Promouvoir une IA éthique et responsable</li>
+                            <li><i class="fas fa-check"></i> Favoriser l'innovation chez les jeunes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="minimind-cta">
+                        <a href="https://ai4good.org" target="_blank" class="btn-minimind">
+                            <i class="fas fa-external-link-alt"></i> Découvrir AI4GOOD
+                        </a>
+                        <a href="pages/certificate.html" class="btn-minimind secondary">
+                            <i class="fas fa-award"></i> Obtenir un certificat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pied de page -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-brain"></i>
+                        <span>Quiz IA MiniMind</span>
+                    </div>
+                    <p class="footer-description">
+                        Un projet éducatif pour le défi MiniMind par AI4GOOD
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Ressources</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/learn.html"><i class="fas fa-book"></i> Apprendre l'IA</a></li>
+                        <li><a href="pages/stats.html"><i class="fas fa-chart-bar"></i> Statistiques</a></li>
+                        <li><a href="pages/about.html"><i class="fas fa-info"></i> À propos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Communauté</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Légal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Confidentialité</a></li>
+                        <li><a href="#">Conditions</a></li>
+                        <li><a href="#">Licence</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Quiz IA MiniMind - Projet pour le défi AI4GOOD. Tous droits réservés.</p>
+                <p class="footer-version">Version 1.0.0 | Dernière mise à jour : <span id="lastUpdate"></span></p>
+            </div>
+        </footer>
+
+        <!-- Modals -->
+        <div class="modal-overlay" id="shareModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-share-alt"></i> Partager mon score</h3>
+                    <button class="modal-close" id="closeShareModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="share-preview">
+                        <div class="share-card">
+                            <div class="share-header">
+                                <i class="fas fa-brain"></i>
+                                <span>Quiz IA MiniMind</span>
+                            </div>
+                            <div class="share-score">
+                                <span class="share-score-value" id="shareScoreValue">0</span>
+                                <span class="share-score-total">/10</span>
+                            </div>
+                            <p class="share-text">J'ai découvert les bases de l'IA avec le quiz MiniMind !</p>
+                        </div>
+                    </div>
+                    
+                    <div class="share-options">
+                        <button class="share-option" data-platform="twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="share-option" data-platform="facebook">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                        <button class="share-option" data-platform="whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="share-option" id="copyLinkBtn">
+                            <i class="fas fa-copy"></i> Copier le lien
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-overlay" id="certificateModal" style="display: none;">
+            <div class="modal-content certificate-modal">
+                <div class="certificate-content" id="certificateContent">
+                    <!-- Certificat généré dynamiquement -->
+                </div>
+                <div class="certificate-actions">
+                    <button class="btn-action" id="downloadCertificate">
+                        <i class="fas fa-download"></i> Télécharger
+                    </button>
+                    <button class="btn-action secondary" id="printCertificate">
+                        <i class="fas fa-print"></i> Imprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/quiz-data.js"></script>
+    <script src="js/ia-generator.js"></script>
+    <script src="js/ai-analytics.js"></script>
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Script d'initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulation du chargement
+            let progress = 0;
+            const loaderInterval = setInterval(() => {
+                progress += 5;
+                document.getElementById('loaderProgress').style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(loaderInterval);
+                    setTimeout(() => {
+                        document.getElementById('loader').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('loader').style.display = 'none';
+                            document.getElementById('mainContainer').style.display = 'block';
+                        }, 500);
+                    }, 500);
+                }
+            }, 50);
+            
+            // Initialisation
+            setTimeout(() => {
+                if (typeof initApp === 'function') {
+                    initApp();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

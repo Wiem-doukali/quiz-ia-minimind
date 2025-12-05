@@ -1,0 +1,66 @@
+{
+    "app": {
+        "name": "Quiz IA MiniMind",
+        "version": "1.0.0",
+        "author": "AI4GOOD Community",
+        "repository": "https://github.com/ai4good/minimind-quiz",
+        "license": "MIT"
+    },
+    "quiz": {
+        "defaultQuestions": 10,
+        "maxQuestions": 20,
+        "timePerQuestion": 120,
+        "shuffleQuestions": true,
+        "showExplanations": true,
+        "showTimer": true,
+        "allowSkip": false,
+        "points": {
+            "easy": 10,
+            "medium": 20,
+            "hard": 30
+        }
+    },
+    "ai": {
+        "enabled": true,
+        "generationFrequency": 0.3,
+        "maxAIGeneratedQuestions": 5,
+        "difficultyAdjustment": true,
+        "analyticsEnabled": true,
+        "personalizedFeedback": true,
+        "knowledgeBaseVersion": "1.0.0"
+    },
+    "ui": {
+        "theme": "light",
+        "accentColor": "#4A00E0",
+        "animations": true,
+        "soundEffects": true,
+        "confetti": true,
+        "accessibility": {
+            "highContrast": false,
+            "largeText": false,
+            "screenReader": true
+        }
+    },
+    "storage": {
+        "enabled": true,
+        "encrypt": false,
+        "retentionDays": 365,
+        "maxSessions": 100,
+        "exportEnabled": true
+    },
+    "features": {
+        "certificate": true,
+        "sharing": true,
+        "stats": true,
+        "learningResources": true,
+        "community": true,
+        "offline": false
+    },
+    "analytics": {
+        "enabled": true,
+        "anonymous": true,
+        "trackPerformance": true,
+        "trackErrors": true,
+        "privacyPolicy": "https://ai4good.org/privacy"
+    }
+}

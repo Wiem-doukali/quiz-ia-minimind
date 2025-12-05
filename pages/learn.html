@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprendre l'IA - MiniMind</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .learn-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .learn-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resource-icon {
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .resource-content {
+            padding: 25px;
+        }
+        
+        .resource-content h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 15px 0;
+        }
+        
+        .resource-tag {
+            padding: 4px 10px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #4A00E0;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .resource-link:hover {
+            background: #3A00C0;
+        }
+        
+        .difficulty-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .difficulty-beginner {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+        
+        .difficulty-intermediate {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+        
+        .difficulty-advanced {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+        
+        .learning-path {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .path-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .path-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #4A00E0;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4A00E0;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #3A00C0;
+            transform: translateY(-2px);
+        }
+        
+        .faq-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .faq-answer {
+            margin-top: 10px;
+            color: #666;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        .community-section {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="learn-page">
+            <div class="learn-header">
+                <h1><i class="fas fa-book-open"></i> Ressources d'apprentissage</h1>
+                <p>Découvre l'intelligence artificielle à travers ces ressources sélectionnées</p>
+            </div>
+            
+            <div class="learning-path">
+                <h2><i class="fas fa-road"></i> Parcours d'apprentissage recommandé</h2>
+                
+                <div class="path-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Comprendre les bases</h3>
+                        <p>Commence par les concepts fondamentaux : qu'est-ce que l'IA, comment fonctionne-t-elle, et quelles sont ses applications quotidiennes ?</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Introduction</span>
+                            <span class="resource-tag">Fondamentaux</span>
+                            <span class="resource-tag">Pour débutants</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="path-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Explorer l'apprentissage automatique</h3>
+                        <p>Découvre comment les machines apprennent à partir de données et les différents types d'apprentissage.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Machine Learning</span>
+                            <span class="resource-tag">Données</span>
+                            <span class="resource-tag">Algorithmes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="path-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Applications pratiques</h3>
+                        <p>Vois comment l'IA est utilisée dans différents domaines : médecine, éducation, divertissement, etc.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Applications</span>
+                            <span class="resource-tag">Cas d'usage</span>
+                            <span class="resource-tag">Industrie</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="path-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Enjeux éthiques</h3>
+                        <p>Réfléchis aux implications éthiques de l'IA : biais algorithmiques, vie privée, responsabilité.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Éthique</span>
+                            <span class="resource-tag">Société</span>
+                            <span class="resource-tag">Responsabilité</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="path-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Passer à la pratique</h3>
+                        <p>Commence à coder tes premiers projets d'IA avec des outils adaptés aux débutants.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Pratique</span>
+                            <span class="resource-tag">Programmation</span>
+                            <span class="resource-tag">Projets</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 style="margin-bottom: 20px;"><i class="fas fa-graduation-cap"></i> Ressources recommandées</h2>
+            <div class="resources-grid">
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resource-content">
+                        <span class="difficulty-badge difficulty-beginner">Débutant</span>
+                        <h3>Introduction à l'IA (vidéo)</h3>
+                        <p>Une série de vidéos expliquant les concepts de base de l'intelligence artificielle de manière accessible.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Vidéo</span>
+                            <span class="resource-tag">Gratuit</span>
+                            <span class="resource-tag">Français</span>
+                        </div>
+                        <a href="https://www.youtube.com/playlist?list=PL_OjI0HeW2nWXvXhXI4-MhngO1hVbEKmz" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Voir les vidéos
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="resource-content">
+                        <span class="difficulty-badge difficulty-beginner">Débutant</span>
+                        <h3>Machine Learning pour débutants</h3>
+                        <p>Cours interactif gratuit de Microsoft pour découvrir le machine learning sans programmation.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Cours</span>
+                            <span class="resource-tag">Gratuit</span>
+                            <span class="resource-tag">Interactif</span>
+                        </div>
+                        <a href="https://github.com/microsoft/ML-For-Beginners" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Accéder au cours
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="resource-content">
+                        <span class="difficulty-badge difficulty-beginner">Débutant</span>
+                        <h3>Teachable Machine</h3>
+                        <p>Outil de Google pour créer des modèles d'IA sans coder, parfait pour comprendre visuellement.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Outil</span>
+                            <span class="resource-tag">Visuel</span>
+                            <span class="resource-tag">Gratuit</span>
+                        </div>
+                        <a href="https://teachablemachine.withgoogle.com/" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Essayer l'outil
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resource-content">
+                        <span class="difficulty-badge difficulty-intermediate">Intermédiaire</span>
+                        <h3>Elements of AI</h3>
+                        <p>Cours gratuit de l'Université d'Helsinki qui a déjà formé plus de 1% de la population finlandaise.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Cours universitaire</span>
+                            <span class="resource-tag">Gratuit</span>
+                            <span class="resource-tag">Certification</span>
+                        </div>
+                        <a href="https://www.elementsofai.com/" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> S'inscrire
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="resource-content">
+                        <span class="difficulty-badge difficulty-intermediate">Intermédiaire</span>
+                        <h3>Fast.ai</h3>
+                        <p>Cours pratiques pour apprendre le deep learning, avec une approche "top-down" (pratique d'abord).</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Deep Learning</span>
+                            <span class="resource-tag">Pratique</span>
+                            <span class="resource-tag">Gratuit</span>
+                        </div>
+                        <a href="https://www.fast.ai/" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Découvrir
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="resource-content">
+                        <span class="difficulty-badge difficulty-beginner">Tous niveaux</span>
+                        <h3>Communauté AI4GOOD</h3>
+                        <p>Rejoins la communauté pour échanger, poser des questions et participer à des projets collaboratifs.</p>
+                        <div class="resource-tags">
+                            <span class="resource-tag">Communauté</span>
+                            <span class="resource-tag">Support</span>
+                            <span class="resource-tag">Projets</span>
+                        </div>
+                        <a href="https://ai4good.org" target="_blank" class="resource-link">
+                            <i class="fas fa-external-link-alt"></i> Rejoindre
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="faq-section">
+                <h2><i class="fas fa-question-circle"></i> Questions fréquentes</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Par où commencer pour apprendre l'IA ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Commence par comprendre les concepts de base grâce à des ressources comme Elements of AI ou les vidéos d'introduction. Puis, expérimente avec des outils visuels comme Teachable Machine avant de passer à la programmation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Faut-il être bon en maths pour faire de l'IA ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Les mathématiques sont importantes pour comprendre les algorithmes d'IA avancés, mais pour débuter et créer des applications simples, des bases en algèbre suffisent. L'important est de commencer et d'apprendre au fur et à mesure.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Quels langages de programmation apprendre ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Python est le langage le plus populaire pour l'IA grâce à ses nombreuses bibliothèques (TensorFlow, PyTorch, scikit-learn). JavaScript est aussi intéressant pour faire de l'IA dans le navigateur. Commence par Python si tu débutes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        L'IA va-t-elle remplacer tous les emplois ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Non, l'IA va transformer les emplois plus qu'elle ne les remplacera. Elle automatisera certaines tâches répétitives, mais créera aussi de nouveaux métiers. L'important est de développer des compétences complémentaires à l'IA.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Comment créer mon premier projet d'IA ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Commence par un projet simple comme : un classificateur d'images (chat/chien), un chatbot simple, ou un système de recommandation. Utilise des outils comme Teachable Machine ou des tutoriels pas-à-pas sur Kaggle.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="community-section">
+                <h2><i class="fas fa-users"></i> Rejoins la communauté</h2>
+                <p style="font-size: 18px; margin-bottom: 30px;">
+                    Apprendre est plus facile ensemble ! Rejoins la communauté AI4GOOD pour échanger avec d'autres passionnés, poser tes questions et participer à des projets collaboratifs.
+                </p>
+                <a href="https://ai4good.org" target="_blank" class="back-btn" style="background: white; color: #00C853;">
+                    <i class="fas fa-external-link-alt"></i> Découvrir AI4GOOD
+                </a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="../index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour au quiz
+                </a>
+                <a href="about.html" class="back-btn" style="background: #FFC107; margin-left: 10px;">
+                    <i class="fas fa-info-circle"></i> À propos du projet
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                answer.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+        
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFAQ = document.querySelector('.faq-question');
+            if (firstFAQ) {
+                toggleFAQ(firstFAQ);
+            }
+        });
+    </script>
+</body>
+</html>

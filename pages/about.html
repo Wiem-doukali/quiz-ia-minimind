@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - MiniMind</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .about-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+        }
+        
+        .mission-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .team-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4A00E0;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #3A00C0;
+            transform: translateY(-2px);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list i {
+            color: #4A00E0;
+            margin-right: 10px;
+        }
+        
+        .version-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="about-page">
+            <div class="about-header">
+                <h1><i class="fas fa-info-circle"></i> À propos de MiniMind</h1>
+                <p>Découvrir l'intelligence artificielle en s'amusant</p>
+            </div>
+            
+            <div class="mission-section">
+                <h2><i class="fas fa-bullseye"></i> Notre Mission</h2>
+                <p>
+                    MiniMind a été créé dans le cadre du défi <strong>AI4GOOD</strong> pour rendre 
+                    l'intelligence artificielle accessible à tous, en particulier aux jeunes passionnés 
+                    de technologie.
+                </p>
+                <p>
+                    Notre objectif est de démystifier l'IA à travers une expérience éducative 
+                    interactive et engageante, tout en promouvant une approche éthique et responsable 
+                    de cette technologie transformatrice.
+                </p>
+            </div>
+            
+            <div class="mission-section">
+                <h2><i class="fas fa-star"></i> Fonctionnalités principales</h2>
+                <ul class="feature-list">
+                    <li><i class="fas fa-brain"></i> <strong>Quiz éducatif</strong> - 10 questions sur les bases de l'IA</li>
+                    <li><i class="fas fa-robot"></i> <strong>Génération IA</strong> - Questions créées dynamiquement par IA</li>
+                    <li><i class="fas fa-chart-line"></i> <strong>Analyse intelligente</strong> - Feedback personnalisé basé sur tes performances</li>
+                    <li><i class="fas fa-mobile-alt"></i> <strong>Design responsive</strong> - Accessible sur tous les appareils</li>
+                    <li><i class="fas fa-gamepad"></i> <strong>Expérience ludique</strong> - Apprendre en s'amusant</li>
+                    <li><i class="fas fa-award"></i> <strong>Certificat de réussite</strong> - Valide tes acquis</li>
+                </ul>
+            </div>
+            
+            <div class="mission-section">
+                <h2><i class="fas fa-code"></i> Technologies utilisées</h2>
+                <div class="tech-stack">
+                    <span class="tech-item">HTML5</span>
+                    <span class="tech-item">CSS3</span>
+                    <span class="tech-item">JavaScript ES6+</span>
+                    <span class="tech-item">Algorithms IA</span>
+                    <span class="tech-item">Local Storage API</span>
+                    <span class="tech-item">Responsive Design</span>
+                    <span class="tech-item">Font Awesome</span>
+                    <span class="tech-item">Google Fonts</span>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <h2><i class="fas fa-users"></i> À propos d'AI4GOOD</h2>
+                <p>
+                    <strong>AI4GOOD</strong> est une communauté dédiée à la promotion de l'intelligence 
+                    artificielle au service du bien commun. Elle encourage les jeunes talents, chercheurs 
+                    et développeurs à créer des solutions technologiques responsables, éthiques et utiles 
+                    à la société.
+                </p>
+                <p>
+                    À travers des projets et défis comme MiniMind, AI4GOOD met en avant le rôle de l'IA 
+                    dans la lutte contre la désinformation, l'amélioration de l'inclusion numérique et 
+                    la protection de l'environnement.
+                </p>
+            </div>
+            
+            <div class="mission-section">
+                <h2><i class="fas fa-shield-alt"></i> Vie privée et données</h2>
+                <p>
+                    Nous croyons en la transparence et le respect de la vie privée. MiniMind :
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> <strong>Ne collecte aucune donnée personnelle</strong></li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Fonctionne entièrement dans ton navigateur</strong></li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Ne partage pas tes données avec des tiers</strong></li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Utilise le stockage local pour sauvegarder ta progression</strong></li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Est 100% open source et transparent</strong></li>
+                </ul>
+            </div>
+            
+            <div class="mission-section">
+                <h2><i class="fas fa-heart"></i> Contribuer au projet</h2>
+                <p>
+                    MiniMind est un projet open source. Tu peux :
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fab fa-github"></i> <strong>Suggérer des améliorations</strong> sur GitHub</li>
+                    <li><i class="fas fa-bug"></i> <strong>Signaler des bugs</strong> ou des problèmes</li>
+                    <li><i class="fas fa-plus-circle"></i> <strong>Proposer de nouvelles questions</strong> sur l'IA</li>
+                    <li><i class="fas fa-language"></i> <strong>Aider à traduire</strong> dans d'autres langues</li>
+                    <li><i class="fas fa-share"></i> <strong>Partager le projet</strong> avec tes amis</li>
+                </ul>
+            </div>
+            
+            <div class="version-info">
+                <h4><i class="fas fa-cog"></i> Informations techniques</h4>
+                <p><strong>Version :</strong> 1.0.0</p>
+                <p><strong>Dernière mise à jour :</strong> <span id="currentDate"></span></p>
+                <p><strong>Licence :</strong> MIT Open Source</p>
+                <p><strong>Code source :</strong> Disponible sur GitHub</p>
+                <p><strong>Compatibilité :</strong> Chrome, Firefox, Safari, Edge (versions récentes)</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="../index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour au quiz
+                </a>
+                <a href="learn.html" class="back-btn" style="background: #00C853; margin-left: 10px;">
+                    <i class="fas fa-book"></i> Ressources d'apprentissage
+                </a>
+                <a href="stats.html" class="back-btn" style="background: #FFC107; margin-left: 10px;">
+                    <i class="fas fa-chart-bar"></i> Mes statistiques
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('fr-FR');
+        });
+    </script>
+</body>
+</html>
